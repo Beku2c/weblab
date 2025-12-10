@@ -1,13 +1,11 @@
 <?php
-// ========== ДАТАБААЗ ХОЛБОЛТ ==========
+
 session_start();
 
-// SQLite ашиглаж байна (MySQL шаардлагагүй)
 try {
     $db = new PDO('sqlite:shagai.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Хүснэгт үүсгэх
     $db->exec("CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
@@ -19,12 +17,11 @@ try {
     die("Датабааз алдаа: " . $e->getMessage());
 }
 
-// ========== ҮЙЛДЛҮҮД ==========
 $error = '';
 $success = '';
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-// Бүртгүүлэх
+
 if (isset($_POST['signup'])) {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
@@ -59,7 +56,6 @@ if (isset($_POST['signup'])) {
     }
 }
 
-// Нэвтрэх
 if (isset($_POST['login'])) {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
@@ -82,7 +78,6 @@ if (isset($_POST['login'])) {
     }
 }
 
-// Гарах
 if (isset($_GET['logout'])) {
     session_destroy();
     header('Location: ?page=home');
@@ -324,7 +319,6 @@ $username = $is_logged_in ? $_SESSION['username'] : '';
         </div>
         
     <?php elseif ($page == 'signup'): ?>
-        <!-- БҮРТГҮҮЛЭХ ХУУДАС -->
         <div class="auth-box">
             <h2 style="text-align:center; margin-bottom:30px;">Бүртгүүлэх</h2>
             
@@ -363,7 +357,6 @@ $username = $is_logged_in ? $_SESSION['username'] : '';
         </div>
         
     <?php elseif ($page == 'home'): ?>
-        <!-- НҮҮР ХУУДАС -->
         <div class="container">
             <?php if ($is_logged_in): ?>
                 <div class="welcome-box">
@@ -402,7 +395,6 @@ $username = $is_logged_in ? $_SESSION['username'] : '';
         </div>
         
     <?php elseif ($page == 'about'): ?>
-        <!-- БИДНИЙ ТУХАЙ -->
         <div class="container">
             <h2>📖 Бидний тухай</h2>
             
@@ -462,7 +454,6 @@ $username = $is_logged_in ? $_SESSION['username'] : '';
         </div>
         
     <?php elseif ($page == 'article'): ?>
-        <!-- ШАГАЙ ТОГЛООМ -->
         <div class="container">
             <h2>🎲 Шагай тоглох 10 төрлийн арга</h2>
             <div class="game-list">
